@@ -3,17 +3,20 @@ const cors = require("cors");
 
 const alertRoutes = require("./routes/alert.routes");
 const errorHandler = require("./middleware/errorHandler");
+const logger = require("./middleware/logger");
 
 const app = express();
 
-// Global middlewares
 app.use(cors());
 app.use(express.json());
+
+// Custom logger middleware
+app.use(logger);
 
 // Routes
 app.use("/alerts", alertRoutes);
 
-// Error handler (must be last)
+// Error handler (last)
 app.use(errorHandler);
 
 module.exports = app;
