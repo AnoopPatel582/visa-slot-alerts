@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  getAlerts,
-  createAlert,
-  updateAlertStatus,
-  deleteAlert,
-} from "../api/alerts";
+import { getAlerts } from "../api/alerts";
 
 import AlertForm from "../components/AlertForm";
 import AlertList from "../components/AlertList";
