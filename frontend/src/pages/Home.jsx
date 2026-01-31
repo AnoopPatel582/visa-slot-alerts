@@ -13,12 +13,17 @@ import AlertList from "../components/AlertList";
 const Home = () => {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchAlerts = async () => {
+  const fetchAlerts = async (pageNumber = 1) => {
     setLoading(true);
     try {
-      const data = await getAlerts();
-      setAlerts(data);
+      const res = await getAlerts({ page: pageNumber, limit: 5 });
+
+      setAlerts(res.data);
+      setPage(res.pagination.page);
+      setTotalPages(res.pagination.totalPages);
     } catch (err) {
       console.error(err);
     } finally {
@@ -27,8 +32,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchAlerts();
-  }, []);
+    fetchAlerts(page);
+  }, [page]);
+
 
   return (
     <motion.div
@@ -41,17 +47,49 @@ const Home = () => {
           Visa Slot Alerts
         </h1>
 
-        <AlertForm onCreate={fetchAlerts} />
+        <AlertForm onCreate={() => fetchAlerts(1)} />
 
         {loading ? (
           <p className="text-center">Loading...</p>
         ) : (
           <AlertList
             alerts={alerts}
-            onStatusChange={fetchAlerts}
-            onDelete={fetchAlerts}
+            onStatusChange={() => fetchAlerts(page)}
+            onDelete={() => fetchAlerts(page)}
           />
+
         )}
+
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <button
+            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+            disabled={page === 1}
+            className={`px-4 py-2 rounded transition cursor-pointer
+      ${page === 1
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-600 text-white hover:bg-gray-700"
+              }`}
+          >
+            Previous
+          </button>
+
+          <span className="text-sm">
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+            disabled={page === totalPages}
+            className={`px-4 py-2 rounded transition cursor-pointer
+      ${page === totalPages
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-600 text-white hover:bg-gray-700"
+              }`}
+          >
+            Next
+          </button>
+        </div>
+
       </div>
     </motion.div>
   );

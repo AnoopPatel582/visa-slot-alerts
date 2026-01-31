@@ -5,12 +5,6 @@ exports.createAlert = async (req, res, next) => {
   try {
     const { country, city, visaType } = req.body;
 
-    // if (!country || !city || !visaType) {
-    //   return res.status(400).json({
-    //     message: "country, city and visaType are required",
-    //   });
-    // }
-
     const alert = await Alert.create({ country, city, visaType });
 
     res.status(201).json(alert);
@@ -24,13 +18,30 @@ exports.getAlerts = async (req, res, next) => {
   try {
     const { country, status } = req.query;
 
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+
     const filter = {};
     if (country) filter.country = country;
     if (status) filter.status = status;
 
-    const alerts = await Alert.find(filter).sort({ createdAt: -1 });
+    const total = await Alert.countDocuments(filter);
 
-    res.status(200).json(alerts);
+    const alerts = await Alert.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      data: alerts,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    });
   } catch (error) {
     next(error);
   }

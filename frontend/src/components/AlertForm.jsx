@@ -21,7 +21,7 @@ const AlertForm = ({ onCreate }) => {
         try {
             await createAlert(formData);
             setFormData({ country: "", city: "", visaType: "Tourist" });
-            onCreate();
+            onCreate(1);
         } catch (err) {
             console.error(err);
         } finally {
@@ -65,13 +65,6 @@ const AlertForm = ({ onCreate }) => {
                 </select>
             </div>
 
-            {/* <button
-        type="submit"
-        disabled={loading}
-        className="w-full md:w-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        {loading ? "Creating..." : "Create Alert"}
-      </button> */}
             <div className="flex justify-center">
                 <button
                     type="submit"
