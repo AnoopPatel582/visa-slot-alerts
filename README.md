@@ -1,7 +1,9 @@
 # Visa Slot Alert Tracker – The Flying Panda
+- **Deployed Link:** [visa-slot-alerts](visa-slot-alerts.netlify.app) <br>
 
-A mini internal tool built to help teams track visa slot alerts by country, city, and visa type.  
-The project demonstrates clean full-stack architecture, realistic API design, and practical product thinking.
+
+    A mini internal tool built to help teams track visa slot alerts by country, city, and visa type.  
+    The project demonstrates clean full-stack architecture, realistic API design, and practical product thinking.
 
 ---
 
@@ -32,10 +34,8 @@ The tool allows team members to create, view, update, and delete alerts efficien
 - Framer Motion
 
 ### DevOps / Deployment
-- AWS EC2 (Free Tier)
-- Nginx (reverse proxy)
-- PM2
-- Environment variables
+- Backend: Render
+- Frontend: Netlify
 
 ---
 
@@ -133,7 +133,6 @@ Run frontend:
 - Pagination added to support future scalability.
 - Tailwind CSS + mobile-first design for clean and responsive UI.
 - Framer Motion used sparingly to enhance UX without overdesign.
-- Nginx reverse proxy simplifies frontend-backend communication in production.
 
 ---
 
