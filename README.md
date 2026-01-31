@@ -1,5 +1,5 @@
 # Visa Slot Alert Tracker – The Flying Panda
-- **Deployed Link:** [visa-slot-alerts](visa-slot-alerts.netlify.app) <br>
+- **Deployed Link:** [visa-slot-alerts](https://visa-slot-alerts.netlify.app/) <br>
 
 
     A mini internal tool built to help teams track visa slot alerts by country, city, and visa type.  
