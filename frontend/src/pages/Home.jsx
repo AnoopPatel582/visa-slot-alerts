@@ -12,19 +12,21 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const fetchAlerts = async (pageNumber = 1) => {
-    setLoading(true);
-    try {
-      const res = await getAlerts({ page: pageNumber, limit: 5 });
+  setLoading(true);
+  try {
+    const response = await getAlerts({ page: pageNumber, limit: 5 });
 
-      setAlerts(res.data);
-      setPage(res.pagination.page);
-      setTotalPages(res.pagination.totalPages);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+
+    setAlerts(response.data || []);
+    setPage(response.pagination?.page || 1);
+    setTotalPages(response.pagination?.totalPages || 1);
+  } catch (err) {
+    console.error("Fetch alerts failed:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchAlerts(page);
